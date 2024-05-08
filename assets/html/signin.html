@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>sign in page</title>
+		<link
+			rel="stylesheet"
+			href="../css/materialize.min.css" />
+		<style>
+			body {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+
+			.mid {
+				width: 90%;
+				flex: 1 0 200px;
+			}
+			label {
+				font-weight: bolder !important;
+				font-size: small;
+			}
+			a {
+				text-transform: uppercase;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- page header-->
+		<div
+			class="container"
+			style="margin-top: 8px; width: 90%">
+			<!-- nav header -->
+			<div class="row">
+				<nav class="z-depth-0 section green white-text darken-1 col s12">
+					<div class="nav-wrapper">
+						<!-- nav logo -->
+						<a
+							href="#"
+							class="brand-logo left"
+							>Logo</a
+						>
+						<!-- nav links -->
+						<ul
+							id="nav-mobile"
+							class="right hide-on-small-only"
+							style="font-size: 2.1rem; font-weight: 500">
+							<li class="active"><a href="#">Home</a></li>
+
+							<li><a href="#">sign-up</a></li>
+							<li><a href="#">services</a></li>
+							<li><a href="#">gallery</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<!-- sign in forms -->
+		<div
+			class="container mid valign-wrapper grey lighten-4"
+			style="margin-bottom: 8px">
+			<div class="row">
+				<!-- witty text wrapper -->
+				<div class="col s12 m6 flow-text">
+					<p
+						class="left-align"
+						style="text-transform: capitalize; font-size: larger"
+						>good things comes to those who visits,
+						<b>AMAZING</b>
+						<span style="color: red">discounts</span> are kept for those who
+						<b>REVISIT!</b>
+					</p>
+				</div>
+
+				<!-- sign in form wrapper -->
+				<div class="col s12 m6 input-field">
+					<!-- email -->
+					<form
+						action="/signin"
+						method="post">
+						<div class="row">
+							<div>
+								<label for="email">Email</label>
+								<input
+									type="text"
+									id="email"
+									placeholder="xyz@mail.com" />
+							</div>
+						</div>
+
+						<!-- password -->
+						<div class="row">
+							<div>
+								<label for="user2">Password</label>
+								<input
+									type="text"
+									id="password"
+									placeholder="password"
+									style="font-family: fantasy" />
+							</div>
+						</div>
+						<!-- submit button -->
+						<div class="row">
+							<button
+								class="btn green darken-1 waves-effect hoverable"
+								type="submit"
+								style="width: 100%"
+								>login
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!--page footer  -->
+		<footer
+			class="page-footer section green darken-1 container"
+			style="width: 90%">
+			<div class="row center">
+				<div class="col s6">
+					<b class="center grey-text text-lighten-4">social handles</b>
+					<ul class="">
+						<li><a href="">facebook</a></li>
+						<li><a href="">twitter</a></li>
+						<li><a href="">whatsapp</a></li>
+					</ul>
+				</div>
+				<div class="col s6">
+					<b class="center grey-text text-lighten-4">contact us</b>
+					<div><code>athome@gmail.com</code></div>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>
