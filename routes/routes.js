@@ -13,6 +13,9 @@ const {
 const routes = {
 	GET: {
 		"/": getRequest,
+		"/signin": getRequest,
+		"/signup": getRequest,
+		"/reservation": getRequest,
 	},
 	POST: {
 		"/signup": postSignUp,
@@ -24,15 +27,18 @@ const routes = {
 	DELETE: {
 		"/del": deleteReq,
 	},
-	loadStatic(paths) {},
 };
 
 async function getRequest(req, res) {
-	let fileFolder = path.join(__dirname, "../", "assets");
+	let fileFolder = path.join(__dirname, "../", "assets", "html");
+	let filePath = path.join(
+		fileFolder,
+		req.url === "/" ? "index.html" : req.url + ".html"
+	);
 	//log(111, pathName);
 
 	await fs
-		.readFile(path.join(fileFolder, "html", "index.html"))
+		.readFile(filePath)
 		.then(function (data) {
 			res.writeHead(200, { "content-type": "text/html" });
 			res.end(data);

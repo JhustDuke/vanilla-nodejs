@@ -16,9 +16,6 @@ function server(req, res) {
 
 	const resolveRoute = routes[method][basePath];
 
-	//serveStatic({ routesObj: resolveRoute, pathname: basePath, res });
-	//readFileAndProcess({ pathname: basePath, res: res });
-
 	if (!resolveRoute) {
 		const mimes = {
 			".css": "text/css",
