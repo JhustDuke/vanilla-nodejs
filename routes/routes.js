@@ -2,7 +2,7 @@ const qs = require("querystring");
 const fs = require("fs").promises;
 const path = require("path");
 const url = require("url");
-//const usersHandler = require("../model/userController");
+const usersHandler = require("../model/userController");
 const { log, setCookie, clearCookie } = require("../utils/utilExports");
 const {
 	generateSessionId,
@@ -13,9 +13,13 @@ const {
 const routes = {
 	GET: {
 		"/": getRequest,
+		"/index": getRequest,
 		"/signin": getRequest,
 		"/signup": getRequest,
 		"/reservation": getRequest,
+		"/gallery": getRequest,
+		"/dashboard": getRequest,
+		"/services": getRequest,
 	},
 	POST: {
 		"/signup": postSignUp,
@@ -61,30 +65,42 @@ function postSignUp(req, res) {
 
 	req.on("end", async function () {
 		const params = qs.parse(body);
-		let FirstName, LastName, PhoneNumber;
 
-		FirstName = params.FirstName;
-		LastName = params.LastName;
-		PhoneNumber = 1 * params.PhoneNumber.toString();
+		let email, password, confirm_password;
 
-		if (!FirstName || !LastName || !PhoneNumber) {
+		email = params.email;
+		password = params.password;
+		confirm_password = params.confirm_password;
+
+		// check for empty fields
+		if (!email || !password || !confirm_password) {
 			res.writeHead(400);
-			res.end("please provide FirstName, LastName, PhoneNumber");
+			res.end("please provide email, password, confirm password");
 			return;
 		}
+		// check for password errors
+		if (password !== confirm_password) {
+			res.writeHead(400);
+			res.end("password and confirm password error");
+		}
 
-		let add = await usersHandler.addUser({
-			FirstName,
-			LastName,
-			PhoneNumber,
+		const addUser = await usersHandler.addUser({
+			email,
+			password,
+			confirm_password,
 		});
 
-		if (add) {
+		if (addUser) {
 			res.writeHead(200, { "content-type": "text/plain" });
-			res.end(`${LastName}, ${FirstName} has been added to db`);
+			res.end(`${email},  has been added to db`);
+		} else if (usersHandler.ifEmailExist(email)) {
+			res.writeHead(401);
+			res.end("this email already exist sign in instead");
 		} else {
 			res.writeHead(400);
-			res.end("data not to db");
+			res.end(
+				`<center> oops we could not sign you up at the moment take a break and try again in 5mins<center/>`
+			);
 		}
 	});
 }
@@ -96,14 +112,24 @@ function postSignIn(req, res) {
 	});
 	req.on("end", async function () {
 		const params = qs.parse(body);
-		let PhoneNumber = params.PhoneNumber;
-		let signIn = await usersHandler.SignIn({ PhoneNumber });
-		if (signIn) {
+		let email = params.email;
+		let password = params.password;
+		const signIn = await usersHandler.SignIn({ email, password });
+		if (
+			signIn
+		) {
 			res.writeHead(200, { "content-type": "text/html" });
-			res.end(`welcome ${PhoneNumber}`);
+			res.end(`welcome @${email.split("@")[0]}`);
+		}
+		// prettier-ignore
+		else if (usersHandler.passwordIsInvalid(password)) {
+			res.writeHead(402);
+			res.end("password or email error");
 		} else {
 			res.writeHead(400);
-			res.end(`these number: ${PhoneNumber} does not exist!`);
+			res.end(
+				`these email: ${email} does not exist in our registry, recheck or sign up instead!`
+			);
 		}
 	});
 }
@@ -140,7 +166,6 @@ function putReq(req, res) {
 }
 
 function deleteReq(req, res) {
-	weqf3feqzz;
 	let body = "";
 	req.on("data", function (packets) {
 		body += packets;

@@ -1,11 +1,11 @@
 const { UserHandler } = require("./userModel");
 const log = require("../utils/log");
 
-async function addUser({ FirstName, LastName, PhoneNumber }) {
+async function addUser({ email, password, confirm_password }) {
 	try {
-		const addUser = new UserHandler({ FirstName, LastName, PhoneNumber });
+		const addUser = new UserHandler({ email, password, confirm_password });
 		if (await addUser.save()) {
-			log(`added ${FirstName} to the database`);
+			log(`added ${email} to the database`);
 			return true;
 		}
 	} catch (error) {
@@ -13,12 +13,40 @@ async function addUser({ FirstName, LastName, PhoneNumber }) {
 		return false;
 	}
 }
-
-async function SignIn({ PhoneNumber }) {
+async function ifEmailExist(email) {
 	try {
-		const signIn = UserHandler.findOne({ PhoneNumber });
+		const checkMail = UserHandler.findOne({ email });
+		if (await checkMail) {
+			// if this email exist in the database
+			return true;
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+async function passwordIsInvalid(password) {
+	try {
+		const checkPassword = UserHandler.findOne({ password });
+		let result = await checkPassword;
+		if (result) {
+			// if this password is invalid
+
+			return true;
+		} else {
+			return false;
+		}
+	} catch (err) {
+		console.log(err);
+	}
+}
+
+async function SignIn({ email, password }) {
+	try {
+		const signIn = UserHandler.findOne({ email, password });
 		if (await signIn) {
-			log("welcome ", PhoneNumber);
+			log("welcome ", email.split("@")[0]);
 			return true;
 		}
 	} catch (err) {
@@ -35,7 +63,7 @@ async function updateData(findDocBy, updateDocTo) {
 		);
 
 		if (result.nModified > 0) {
-			log(`Updated ${updateDocTo.PhoneNumber}`);
+			log(`Updated ${updateDocTo.email}`);
 			return true;
 		} else if (result.n > 0) {
 			log(`No changes made. Document found but not modified.`);
@@ -78,5 +106,12 @@ async function getCollections() {
 		log(e);
 	}
 }
-getCollections();
-module.exports = { addUser, SignIn, updateData, deleteData };
+
+module.exports = {
+	addUser,
+	SignIn,
+	updateData,
+	deleteData,
+	ifEmailExist,
+	passwordIsInvalid,
+};

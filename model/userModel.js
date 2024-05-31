@@ -2,20 +2,20 @@ const mongoose = require("./connection");
 const log = require("../utils/log");
 const usersSchema = new mongoose.Schema(
 	{
-		FirstName: {
+		email: {
 			type: String,
-			unique: false,
-			required: [true, "firstname is required"],
-		},
-		LastName: {
-			type: String,
-			unique: false,
-			required: [true, "LastName is required"],
-		},
-		PhoneNumber: {
-			type: Number,
 			unique: true,
-			required: [true, "phone number is required"],
+			required: [true, "email is required"],
+		},
+		password: {
+			type: String,
+			unique: false,
+			required: [true, "password is required"],
+		},
+		confirm_password: {
+			type: String,
+			unique: false,
+			required: [true, "confirm password is required"],
 		},
 	},
 	{ collection: "users" }

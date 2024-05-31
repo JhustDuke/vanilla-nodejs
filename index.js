@@ -33,82 +33,24 @@ function server(req, res) {
 
 		fs.readFile(filePath)
 			.then(function (contents) {
-				if (path.extname(filePath) === ".ico") {
-				} else {
-					res.writeHead(200, { "content-type": fileType });
-					res.end(contents);
-				}
-			})
-			.catch(function (err) {
-				log(err);
-				res.writeHead(404);
-				res.end(`<center><h1>Oops! File not found</h1></center>`);
-			});
-		return;
-	}
-
-	if (resolveRoute) {
-		resolveRoute(req, res);
-	} else {
-		res.writeHead(404);
-		res.end(`<center><h1>Oops! Something went wrong</h1></center>`);
-	}
-}
-
-function serveStatic({ routesObj, pathname, res }) {
-	if (!routesObj) {
-		const mimes = {
-			".css": "text/css",
-			".html": "text/html",
-			".jpeg": "image/jpeg",
-			".png": "image/png",
-		};
-		const fileExt = path.extname(pathname);
-		const fileType = mimes[fileExt];
-		const filePath = path.join(
-			__dirname,
-			"assets",
-			decodeURIComponent(pathname)
-		);
-
-		fs.readFile(filePath)
-			.then(function (data) {
-				if (data.endsWith(".ico")) {
-					return;
-				} else {
-					res.writeHead(200, { "content-type": fileType });
-					res.end(data);
-				}
-			})
-			.catch(function (error) {
-				log("there was an error", error);
-			});
-	}
-}
-function serveStaticFile({ basePath, res }) {
-	const mimes = {
-		".css": "text/css",
-		".html": "text/html",
-		".jpeg": "image/jpeg",
-		".png": "image/png",
-	};
-
-	const fileExt = path.extname(basePath);
-	const fileType = mimes[fileExt] || "text/plain";
-	const filePath = path.join(__dirname, "assets", decodeURIComponent(basePath));
-
-	fs.readFile(filePath)
-		.then(function (contents) {
-			if (path.extname(filePath) === ".ico") {
-				// Do nothing for .ico files
-			} else {
 				res.writeHead(200, { "content-type": fileType });
 				res.end(contents);
-			}
-		})
-		.catch(function (error) {
-			console.error("Error reading file:", error);
-			res.writeHead(404);
-			res.end(`<center><h1>Oops! File not found</h1></center>`);
-		});
+			})
+			.catch(function (err) {
+				res.writeHead(404);
+				res.end(`<center><h1>Oops! something happened</h1></center>`);
+			});
+		return;
+	} else {
+		resolveRoute(req, res);
+	}
 }
+/**
+ * impliment sign in and sign up with the front end
+ * make the link tags in html work as it should in directing people
+ * protect the dashboard to only logged in user
+ *
+ * create a reservation dashboard
+ * make the serve static files better
+ *
+ */

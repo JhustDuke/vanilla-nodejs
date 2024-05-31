@@ -8,7 +8,7 @@
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0" />
-		<title>reservation page</title>
+		<title>Dashboard</title>
 		<link
 			rel="stylesheet"
 			href="../css/materialize.min.css" />
@@ -18,20 +18,30 @@
 				min-height: 100vh;
 				flex-direction: column;
 			}
+			@layer {
+				.active {
+					color: white !important;
+				}
+			}
 
 			.mid {
 				width: 90%;
 				flex: 1 0 200px;
 			}
 			label {
-				font-weight: bolder !important;
+				font-weight: 800 !important;
 				font-size: small;
+				text-transform: uppercase;
+			}
+			input {
+				margin-bottom: 18px !important;
 			}
 			a {
 				text-transform: uppercase;
 			}
 		</style>
 	</head>
+
 	<body>
 		<!-- page header-->
 		<div
@@ -52,18 +62,36 @@
 							id="nav-mobile"
 							class="right hide-on-small-only"
 							style="font-size: 2.1rem; font-weight: 500">
-							<li class="active"><a href="#">Home</a></li>
+							<li class="active"><a href="/">Home</a></li>
 
-							<li><a href="#">sign-up</a></li>
-							<li><a href="#">services</a></li>
-							<li><a href="#">gallery</a></li>
+							<li><a href="./signup">sign-up</a></li>
+							<li><a href="./services">services</a></li>
+							<li><a href="./gallery">gallery</a></li>
 						</ul>
 					</div>
 				</nav>
 			</div>
 		</div>
 
-		<!-- reservation -->
+		<!-- aside -->
+		<section class="container mid grey lighten-4 tabParent">
+			<div
+				class="row section"
+				style="font-size: medium; text-overflow: ellipsis">
+				<!-- the main section -->
+				<main
+					id="toggleable"
+					class="col s7 m9 section"
+					style="
+						border-left: thin outset rgb(197, 193, 193);
+						min-height: 200px;
+					">
+					<div>
+						<center> services</center>
+					</div>
+				</main>
+			</div>
+		</section>
 
 		<!--page footer  -->
 		<footer
@@ -84,5 +112,8 @@
 				</div>
 			</div>
 		</footer>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<script src="../js/index.js"></script>
 	</body>
 </html>
