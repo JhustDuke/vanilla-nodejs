@@ -15,8 +15,8 @@ async function addUser({ email, password, confirm_password }) {
 }
 async function ifEmailExist(email) {
 	try {
-		const checkMail = UserHandler.findOne({ email });
-		if (await checkMail) {
+		const checkMail = await UserHandler.findOne({ email });
+		if (checkMail) {
 			// if this email exist in the database
 			return true;
 		} else {
@@ -24,21 +24,21 @@ async function ifEmailExist(email) {
 		}
 	} catch (err) {
 		console.log(err);
+		return false;
 	}
 }
-async function passwordIsInvalid(password) {
+async function passwordIsInvalid(email, password) {
 	try {
-		const checkPassword = UserHandler.findOne({ password });
-		let result = await checkPassword;
-		if (result) {
-			// if this password is invalid
-
-			return true;
+		//if the password does not match the email
+		const user = await UserHandler.findOne({ email });
+		if (user && user.password !== password) {
+			return true; // here means the password does not match
 		} else {
-			return false;
+			return false; // here means the password matches
 		}
 	} catch (err) {
 		console.log(err);
+		return false;
 	}
 }
 

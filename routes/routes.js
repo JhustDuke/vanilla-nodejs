@@ -84,23 +84,28 @@ function postSignUp(req, res) {
 			res.end("password and confirm password error");
 		}
 
-		const addUser = await usersHandler.addUser({
-			email,
-			password,
-			confirm_password,
-		});
+		try {
+			const addUser = await usersHandler.addUser({
+				email,
+				password,
+				confirm_password,
+			});
 
-		if (addUser) {
-			res.writeHead(200, { "content-type": "text/plain" });
-			res.end(`${email},  has been added to db`);
-		} else if (usersHandler.ifEmailExist(email)) {
-			res.writeHead(401);
-			res.end("this email already exist sign in instead");
-		} else {
-			res.writeHead(400);
-			res.end(
-				`<center> oops we could not sign you up at the moment take a break and try again in 5mins<center/>`
-			);
+			if (addUser) {
+				res.writeHead(200, { "content-type": "text/plain" });
+				res.end(`${email},  has been added to db`);
+			} else if (await usersHandler.ifEmailExist(email)) {
+				res.writeHead(401);
+				res.end("this email already exist sign in instead");
+			} else {
+				res.writeHead(400);
+				res.end(
+					`<center> oops we could not sign you up at the moment take a break and try again in 5mins<center/>`
+				);
+			}
+		} catch (e) {
+			res.writeHead(404);
+			res.end("internal server error", e);
 		}
 	});
 }
@@ -122,7 +127,7 @@ function postSignIn(req, res) {
 			res.end(`welcome @${email.split("@")[0]}`);
 		}
 		// prettier-ignore
-		else if (usersHandler.passwordIsInvalid(password)) {
+		else if (await usersHandler.passwordIsInvalid(email, password)) {
 			res.writeHead(402);
 			res.end("password or email error");
 		} else {
