@@ -13,10 +13,9 @@ const {
 const routes = {
 	GET: {
 		"/": getRequest,
-		"/index": getRequest,
 		"/signin": getRequest,
 		"/signup": getRequest,
-		"/reservation": getRequest,
+
 		"/gallery": getRequest,
 		"/dashboard": getRequest,
 		"/services": getRequest,
@@ -39,7 +38,9 @@ async function getRequest(req, res) {
 		fileFolder,
 		req.url === "/" ? "index.html" : req.url + ".html"
 	);
-	//log(111, pathName);
+
+	if (req.url === "/dashboard") {
+	}
 
 	await fs
 		.readFile(filePath)

@@ -9,13 +9,15 @@ const sessionStoreSchema = new mongoose.Schema({
 	sessionKey: {
 		type: String,
 		unique: true,
-		//required: true,
+		required: true,
 		validate: {
+			// prevent loggin multiple session keys
 			validator: function (key) {
 				return this.model("sessionStore")
 					.findOne({ sessionKey: key })
 					.then(function (sessionName) {
 						if (sessionName) {
+							// if a session with this value already exist
 							return false;
 						}
 						return true;
@@ -46,12 +48,14 @@ const sessionStoreSchema = new mongoose.Schema({
 
 	preferences: [String],
 	expirationDate: {
-		type: Date,
-		default: Date.now() + week,
-		// default: Date.now() + 30 * 60 * 60 * 1000, //30=30mins, 60=1hr,60=60secs,1k=1sec | 1000mili
+		type: String,
+		default: function () {
+			let sessionTimer = new Date();
+			sessionTimer.setHours(sessionTimer.getHours() + 1);
+			return sessionTimer.toISOString();
+		},
 	},
 });
-
 const sessionModel = mongoose.model("sessionStore", sessionStoreSchema);
 
 module.exports = sessionModel;

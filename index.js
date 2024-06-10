@@ -46,11 +46,9 @@ function server(req, res) {
 	}
 }
 /**
- * impliment sign in and sign up with the front end
- * make the link tags in html work as it should in directing people
- * protect the dashboard to only logged in user
- *
- * create a reservation dashboard
- * make the serve static files better
+ *link for sign in the html
+ * protect the dashboard to only logged in user or users 1hour after login in
+ * make the error pages link to an error page
+ * show code errors beside the form
  *
  */
