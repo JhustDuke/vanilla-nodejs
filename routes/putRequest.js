@@ -1,10 +1,12 @@
 const qs = require("querystring");
 const fs = require("fs").promises;
 const path = require("path");
-const DBController = require("../model/DBController");
+const dbController = require("../model/DBController");
 const log = require("../utils/log");
+
+
 function putRequest(req, res) {
-	log(req.headers);
+	const DBController=dbController()
 	let body = "";
 	req.on("data", function (packets) {
 		body += packets;

@@ -1,10 +1,10 @@
 const qs = require("querystring");
 const fs = require("fs").promises;
 const path = require("path");
-const url = require("url");
 const log = require("../utils/log");
 const getRequest = require("./getRequest");
-const postRequest = require("./postRequest");
+const postRequestSignUp = require("./postRequestSignUp");
+const postRequestSignIn = require("./postRequestSignIn");
 const putRequest = require("./putRequest");
 const deleteRequest = require("./deleteRequest");
 
@@ -19,8 +19,8 @@ const routes = {
 		"/services": getRequest,
 	},
 	POST: {
-		"/signup": postRequest.signUp,
-		"/signin": postRequest.SignIn,
+		"/signup": postRequestSignUp,
+		"/signin": postRequestSignIn,
 	},
 	PUT: {
 		"/put": putRequest,
@@ -29,10 +29,6 @@ const routes = {
 		"/del": deleteRequest,
 	},
 };
-
-
-
-
 
 module.exports = {
 	routes,

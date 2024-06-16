@@ -1,14 +1,13 @@
 const qs = require("querystring");
-const DBController = require("../model/DBController");
+const dbController = require("../model/DBController");
 const sessionController = require("../session/sessionController");
 const cookieController = require("../utils/cookieController");
 
-function postRequest(req, res) {
-	const signUp = function (req, res) {
-		req.on("error", function (err) {
-			res.end("there was an error somewhere", err);
-		});
-	};
+function postRequestSignUp(req, res) {
+	const DBController = dbController();
+	req.on("error", function (err) {
+		res.end("there was an error somewhere", err);
+	});
 
 	let body = "";
 	req.on("data", function (packets) {
@@ -60,9 +59,5 @@ function postRequest(req, res) {
 			res.end("internal server error", e);
 		}
 	});
-	return {
-		signUp,
-		signin,
-	};
 }
-module.exports = postRequest;
+module.exports = postRequestSignUp;

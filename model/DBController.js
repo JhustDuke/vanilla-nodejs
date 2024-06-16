@@ -1,4 +1,4 @@
-const { UserHandler } = require("./userModel");
+const UserHandler = require("./userModel");
 const log = require("../utils/log");
 
 function DBController() {

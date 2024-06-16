@@ -38,7 +38,8 @@ function server(req, res) {
 			})
 			.catch(function (err) {
 				res.writeHead(404);
-				res.end(`<center><h1>Oops! something happened</h1></center>`);
+				log("error from serverfunction");
+				res.end(`<center><h1>Oops! something happened </h1></center>`);
 			});
 		return;
 	} else {
