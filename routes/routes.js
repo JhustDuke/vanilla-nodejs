@@ -1,6 +1,3 @@
-const qs = require("querystring");
-const fs = require("fs").promises;
-const path = require("path");
 const log = require("../utils/log");
 const getRequest = require("./getRequest");
 const postRequestSignUp = require("./postRequestSignUp");

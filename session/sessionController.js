@@ -78,15 +78,21 @@ function sessionController(req, res) {
 			log("session not saved from createSession", e);
 		}
 	};
-	const checkSessionExpiration = async function (sessionDate) {
+	const checkSessionExpiration = async function (userEmail) {
 		const currentDate = new Date().toISOString();
-		const dbDate = sessionModel.expirationDate;
-		if (currentDate > new Date(sessionDate)) {
-			log("session expired from checkExpiration");
+		try {
+			const doc = await sessionModel.findOne({ userEmail }).exec();
+			const dbDate = new Date(doc.expirationDate);
+			if (currentDate > dbDate) {
+				log("session expired from checkExpiration");
+				return false;
+			} else {
+				log("session is active from checkExpiration");
+				return true;
+			}
+		} catch (e) {
+			console.log("there was an error from checkSessionExpiration:", e);
 			return false;
-		} else {
-			log("session is active from checkExpiration");
-			return true;
 		}
 	};
 

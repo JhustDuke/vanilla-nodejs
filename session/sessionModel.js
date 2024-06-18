@@ -1,4 +1,4 @@
-const mongoose = require("../model/connection");
+const mongoose = require("../database/connection");
 
 const sessionStoreSchema = new mongoose.Schema({
 	sessionKey: {
@@ -52,5 +52,6 @@ const sessionStoreSchema = new mongoose.Schema({
 	},
 });
 const sessionModel = mongoose.model("sessionStore", sessionStoreSchema);
+// const test = new sessionModel();
 
 module.exports = sessionModel;

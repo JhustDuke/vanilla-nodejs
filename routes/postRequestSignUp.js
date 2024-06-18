@@ -1,5 +1,5 @@
 const qs = require("querystring");
-const dbController = require("../model/DBController");
+const dbController = require("../database/DBController");
 const sessionController = require("../session/sessionController");
 const cookieController = require("../utils/cookieController");
 

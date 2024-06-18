@@ -1,8 +1,8 @@
 const qs = require("querystring");
 const fs = require("fs").promises;
 const path = require("path");
-const log=require('../utils/log');
-const DBController = require("../model/DBController");
+const log = require("../utils/log");
+const DBController = require("../database/DBController");
 
 function deleteRequest(req, res) {
 	let body = "";
